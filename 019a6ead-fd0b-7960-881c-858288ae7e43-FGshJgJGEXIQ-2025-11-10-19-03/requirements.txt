@@ -1,2 +1,2 @@
 basic-pitch==0.2.5
-tensorflow==2.13.0
+tensorflow>=2.16.1,<2.21
