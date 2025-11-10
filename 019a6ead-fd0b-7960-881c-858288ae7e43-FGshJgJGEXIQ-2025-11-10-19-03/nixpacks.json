@@ -1,8 +1,8 @@
 {
-  "providers": ["python", "node"],
+  "providers": ["node"],
   "phases": {
     "setup": {
-      "nixPkgs": ["python311", "nodejs_20"]
+      "nixPkgs": ["python311"]
     }
   }
 }
