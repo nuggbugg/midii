@@ -1,12 +1,12 @@
 {
   "phases": {
     "setup": {
-      "nixPkgs": ["python311", "nodejs_20", "npm-10_x", "pip"]
+      "nixPkgs": ["python311", "nodejs_20", "npm-10_x"]
     },
     "install": {
       "cmds": [
         "npm install",
-        "pip install -r requirements.txt"
+        "python -m pip install -r requirements.txt"
       ]
     },
     "build": {
