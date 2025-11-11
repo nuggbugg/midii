@@ -1,2 +1,2 @@
-basic-pitch
 tensorflow-cpu
+basic-pitch
