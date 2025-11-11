@@ -11,7 +11,7 @@ RUN npm ci --only=production && npm cache clean --force
 
 # Install Python dependencies with no cache
 COPY requirements.txt ./
-RUN pip3 install --no-cache-dir -r requirements.txt && \
+RUN pip3 install --break-system-packages --no-cache-dir -r requirements.txt && \
     find /usr/lib/python3.11 -name "*.pyc" -delete && \
     find /usr/lib/python3.11 -name "__pycache__" -type d -delete
 
