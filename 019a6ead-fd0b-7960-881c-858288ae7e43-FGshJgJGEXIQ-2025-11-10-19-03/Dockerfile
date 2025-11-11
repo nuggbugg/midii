@@ -1,32 +1,28 @@
-FROM node:20-slim
+FROM node:20-alpine
 
-# Install Python
-RUN apt-get update && apt-get install -y \
-    python3 \
-    python3-pip \
-    python3-venv \
-    ffmpeg \
-    && rm -rf /var/lib/apt/lists/*
+# Install Python and ffmpeg
+RUN apk add --no-cache python3 py3-pip ffmpeg
 
 WORKDIR /app
 
-# Copy package files
+# Copy package files and install Node dependencies
 COPY package*.json ./
+RUN npm ci --only=production && npm cache clean --force
 
-# Install Node dependencies
-RUN npm install
-
-# Copy Python requirements
+# Install Python dependencies with no cache
 COPY requirements.txt ./
-
-# Install Python dependencies
-RUN pip3 install --break-system-packages -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt && \
+    find /usr/lib/python3.11 -name "*.pyc" -delete && \
+    find /usr/lib/python3.11 -name "__pycache__" -type d -delete
 
 # Copy application code
 COPY . .
 
 # Build Next.js
-RUN npm run build
+RUN npm run build && \
+    rm -rf node_modules && \
+    npm ci --only=production && \
+    npm cache clean --force
 
 # Expose port
 EXPOSE 3000
